@@ -13,45 +13,83 @@ class CalculaterPage extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => CalculaterState(),
       child: Scaffold(
-        appBar: AppBar(
+        /*appBar: AppBar(
           title: Text(calculaterList[calculaterNumber].title),
-        ),
-        body: ListView(children: [calculaterList[calculaterNumber].body]),
-        bottomNavigationBar: Container(
-          color: Colors.lightBlueAccent.shade100,
-          padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-          child: Row(
-            children: [
-              Expanded(
-                  flex: 1,
-                  child: FlatButton(
-                    color: Colors.blue,
-                    child: Text('Hesapla'),
-                    onPressed: () {
-                      calculaterList[calculaterNumber].onCalculate;
-                      showModalBottomSheet(
-                        isScrollControlled: true,
-                        context: context,
-                        builder: (context) => SingleChildScrollView(
-                          child: Container(
-                            padding: EdgeInsets.only(
-                                bottom:
-                                    MediaQuery.of(context).viewInsets.bottom),
-                            child: Container(
-                              color: Colors.blue,
-                              child: SizedBox(
-                                width: 150,
-                                height: 150,
-                              ),
-                            ),
+        ),*/
+        body: CalculaterPageBody(calculaterNumber: calculaterNumber),
+        bottomNavigationBar:
+            CalculateButton(calculaterNumber: calculaterNumber),
+      ),
+    );
+  }
+}
+
+class CalculaterPageBody extends StatelessWidget {
+  const CalculaterPageBody({
+    Key key,
+    @required this.calculaterNumber,
+  }) : super(key: key);
+
+  final int calculaterNumber;
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomScrollView(slivers: [
+      SliverAppBar(
+        title: Text(calculaterList[calculaterNumber].title),
+      ),
+      SliverList(
+        // Use a delegate to build items as they're scrolled on screen.
+        delegate:
+            SliverChildListDelegate([calculaterList[calculaterNumber].body]),
+      )
+      // calculaterList[calculaterNumber].body
+    ]);
+  }
+}
+
+class CalculateButton extends StatelessWidget {
+  const CalculateButton({
+    Key key,
+    @required this.calculaterNumber,
+  }) : super(key: key);
+
+  final int calculaterNumber;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.lightBlueAccent.shade100,
+      padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+      child: Row(
+        children: [
+          Expanded(
+              flex: 1,
+              child: FlatButton(
+                color: Colors.blue,
+                child: Text('Hesapla'),
+                onPressed: () {
+                  calculaterList[calculaterNumber].onCalculate;
+                  showModalBottomSheet(
+                    isScrollControlled: true,
+                    context: context,
+                    builder: (context) => SingleChildScrollView(
+                      child: Container(
+                        padding: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).viewInsets.bottom),
+                        child: Container(
+                          color: Colors.blue,
+                          child: SizedBox(
+                            width: 150,
+                            height: 150,
                           ),
                         ),
-                      );
-                    },
-                  ))
-            ],
-          ),
-        ),
+                      ),
+                    ),
+                  );
+                },
+              ))
+        ],
       ),
     );
   }
