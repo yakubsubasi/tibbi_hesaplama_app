@@ -31,6 +31,6 @@ class OptionState extends ChangeNotifier {
   toggleOptionsBoolValue() {
     _optionsBoolValue = !_optionsBoolValue;
     notifyListeners();
-    //deneme yazısıdır
+    //deneme yazısıdır evet deneme
   }
 }
