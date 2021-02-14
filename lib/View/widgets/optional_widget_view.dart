@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:tibbi_hesaplama/state/calculater_state.dart';
 import 'package:tibbi_hesaplama/state/optional_element_state.dart';
 
+// This widget is used in calculaters such as GKS.
 class OptionalElement extends StatelessWidget {
   int score;
   final String title;
@@ -14,8 +15,11 @@ class OptionalElement extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => OptionalElementState(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<OptionalElementState>(
+            create: (context) => OptionalElementState()),
+      ],
       child: Card(
         child: Container(
           child: Column(
@@ -62,27 +66,47 @@ class Option extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: ListTile(
-        dense: true,
-        title: Text(
-          title,
-          style: TextStyle(fontSize: 16),
-        ),
-        trailing: Checkbox(
-          onChanged: (value) {
-            Provider.of<OptionalElementState>(context, listen: false)
-                .clearResult();
-            Provider.of<OptionalElementState>(context, listen: false)
-                .addToResult(score);
-          },
-          value: false,
-        ),
-        subtitle: Text(
-          'Score: $score',
-          textAlign: TextAlign.end,
+    return ChangeNotifierProvider<OptionState>(
+      create: (context) => OptionState(),
+      child: Container(
+        child: ListTile(
+          dense: true,
+          title: Text(
+            title,
+            style: TextStyle(fontSize: 16),
+          ),
+          trailing: OptionChekBox(score: score),
+          subtitle: Text(
+            'Score: $score',
+            textAlign: TextAlign.end,
+          ),
         ),
       ),
+    );
+  }
+}
+
+class OptionChekBox extends StatelessWidget {
+  const OptionChekBox({
+    Key key,
+    @required this.score,
+  }) : super(key: key);
+
+  final int score;
+
+  @override
+  Widget build(BuildContext context) {
+    return Checkbox(
+      value: Provider.of<OptionState>(context).optionsBoolValue,
+      onChanged: (value) {
+        Provider.of<OptionalElementState>(context, listen: false).clearResult();
+        Provider.of<OptionalElementState>(context, listen: false)
+            .addToResult(score);
+        Provider.of<OptionState>(context, listen: false)
+            .toggleOptionsBoolValue();
+        print(
+            Provider.of<OptionState>(context, listen: false).optionsBoolValue);
+      },
     );
   }
 }

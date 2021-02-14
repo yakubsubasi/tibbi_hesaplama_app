@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+
 import 'package:tibbi_hesaplama/View/widgets/quantitative_widget.dart';
 import 'package:tibbi_hesaplama/calculater_staff/gks_brain.dart';
 
