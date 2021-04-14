@@ -1,12 +1,14 @@
 # tibbi_hesaplama
 
-A new Flutter project.
-
+A medical calculater project for ER physician made by flutter.
+ 
 ![Alt Text](https://media.giphy.com/media/bZhvhxYJJWSHro4k3y/giphy.gif)
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+it is an unfinished project.
+
+Provider Package is used as a state management tool in this project.
 
 A few resources to get you started if this is your first Flutter project:
 
